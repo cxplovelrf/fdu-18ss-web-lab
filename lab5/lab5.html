@@ -10,7 +10,7 @@
 
    <!-- Custom styles for this template -->
    <link href="lab5.css" rel="stylesheet">
-
+    <script src="lab5.js"></script>
    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
    <!--[if lt IE 9]>
    <script src="bootstrap3_defaultTheme/assets/js/html5shiv.js"></script>
@@ -117,7 +117,7 @@
          <h2>View Cart</h2>
       </div>
          
-      <table class="table table-condensed">
+      <table class="table table-condensed" id="tableOne">
          <tr>
             <th>Image</th>
             <th>Product</th>
@@ -125,7 +125,6 @@
             <th>Price</th>
             <th>Amount</th>
          </tr>
-
          <!-- 这是你需要修改的地方 -->
          <!-- 本来是下面这样👇 -->
 
@@ -160,19 +159,19 @@
 
          <tr class="success strong">
             <td colspan="4" class="moveRight">Subtotal</td>
-            <td >$1700</td>
+            <td >$0</td>
          </tr>
          <tr class="active strong">
             <td colspan="4" class="moveRight">Tax</td>
-            <td>$170</td>
+            <td>$0</td>
          </tr>  
          <tr class="strong">
             <td colspan="4" class="moveRight">Shipping</td>
-            <td>$100</td>
+            <td>$0</td>
          </tr> 
          <tr class="warning strong text-danger">
             <td colspan="4" class="moveRight">Grand Total</td>
-            <td>$1970</td>
+            <td>$0</td>
          </tr>    
          <tr >
             <td colspan="4" class="moveRight"><button type="button" class="btn btn-primary" >Continue Shopping</button></td>
