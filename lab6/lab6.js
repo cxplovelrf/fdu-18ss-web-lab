@@ -3,7 +3,6 @@ window.onload = function () {
     var big = document.getElementById("featured").getElementsByTagName("img");
     var text = document.getElementById("featured").getElementsByTagName("figcaption");
     var container = document.getElementById("featured");
-    var timer = null;
     for (var i = 0; i < images.length; i++) {
         images[i].onclick = function () {
             big[0].src = this.src.replace("small", "medium");

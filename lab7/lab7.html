@@ -4,8 +4,8 @@
 <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="lab7.css">
-<script>
-</script>      
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+
 </head>    
 <body class="tiled">
 <header>
@@ -20,7 +20,7 @@
            <p><label>Hue Rotate: </label><input type="range" id="sliderHue" min="0" max="360" value="0" class="sliders" /> <span id="numHue">0</span>deg</p>
            <p><label>Grayscale: </label><input type="range" id="sliderGray" min="0" max="100" value="0" class="sliders"/> <span id="numGray">0</span>%</p>
            <p><label>Blur: </label><input type="range" id="sliderBlur" min="0" max="10" value="0" class="sliders" /> <span id="numBlur">0</span>px</p>
-           <p><button id="resetFilters">Reset</button> </p>
+           <p><input type="button" id="resetFilters">Reset</input> </p>
         </form>    
     </div>
     <figure id="imgManipulated">
@@ -39,7 +39,53 @@
     </div>
 </main>
 <script>
-
-</script>    
+    $(document).ready(function () {
+        var sliderOpacity = document.getElementById('sliderOpacity');
+        var sliderSaturation = document.getElementById('sliderSaturation');
+        var sliderBrightness = document.getElementById('sliderBrightness');
+        var sliderHue = document.getElementById('sliderHue');
+        var sliderGray = document.getElementById('sliderGray');
+        var sliderBlur = document.getElementById('sliderBlur');
+        var bigPicture=$('main figure img');
+        var smallPicture=$('main #thumbBox div img');
+        var bigPictureFigcaption=$('main #imgManipulated figcaption');
+        $('#resetFilters').click(function () {
+            bigPicture.css("filter","none");
+            sliderOpacity.value="100";
+            sliderBrightness.value="100";
+            sliderSaturation.value="100";
+            sliderHue.value="0";
+            sliderGray.value="0";
+            sliderBlur.value="0";
+            $("#numOpacity").html(sliderOpacity.value.toString());
+            $("#numSaturation").html(sliderSaturation.value.toString());
+            $("#numBrightness").html(sliderBrightness.value.toString());
+            $("#numHue").html(sliderHue.value.toString());
+            $("#numGray").html(sliderGray.value.toString());
+            $("#numBlur").html(sliderBlur.value.toString());
+        });
+        for(var i = 0;i<smallPicture.length;i++){
+            smallPicture.click(function () {
+                var src = $(this).attr("src").replace("small","medium");
+                bigPicture.attr("src",src);
+                bigPictureFigcaption.html("<em>"+$(this).attr("alt")+"</em><br>"+$(this).attr("title"));
+            })
+        }
+        $("#sliderOpacity,#sliderBrightness,#sliderSaturation,#sliderHue,#sliderGray,#sliderBlur").on('input propertychange',function(e){
+            var rotateValue=sliderHue.value+"deg";
+            var blurValue=sliderBlur.value+"px";
+            $("#numOpacity").html(sliderOpacity.value.toString());
+            $("#numSaturation").html(sliderSaturation.value.toString());
+            $("#numBrightness").html(sliderBrightness.value.toString());
+            $("#numHue").html(sliderHue.value.toString());
+            $("#numGray").html(sliderGray.value.toString());
+            $("#numBlur").html(sliderBlur.value.toString());
+            bigPicture.css("filter","opacity("+sliderOpacity.value/100+") brightness("+sliderBrightness.value/100+
+                ") saturate("+sliderSaturation.value/100+") blur("+blurValue+") hue-rotate("+rotateValue+") grayscale("+sliderGray.value/100+")");
+            bigPicture.css("-webkit-filter","opacity("+sliderOpacity.value/100+ ") brightness("+sliderBrightness.value/100+
+                ") saturate("+sliderSaturation.value/100+") blur("+blurValue+") hue-rotate("+rotateValue+") grayscale("+sliderGray.value/100+")");
+        })
+    })
+</script>
 </body>   
 </html>
