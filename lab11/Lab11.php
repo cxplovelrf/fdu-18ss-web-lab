@@ -1,6 +1,13 @@
 <?php
 //Fill this place
-
+$dn="localhost";
+$un="root";
+$pw="";
+$db="travel";
+$conn = new mysqli($dn,$un,$pw,$db);
+if(!$conn){
+    die($conn->connect_error);
+}
 //****** Hint ******
 //connect database and fetch data here
 
@@ -46,7 +53,8 @@
 
                 //****** Hint ******
                 //display the list of continents
-
+                $query = "SELECT * From continents";
+                $result = $conn->query($query);
                 while($row = $result->fetch_assoc()) {
                   echo '<option value=' . $row['ContinentCode'] . '>' . $row['ContinentName'] . '</option>';
                 }
@@ -60,7 +68,12 @@
                 //Fill this place
 
                 //****** Hint ******
-                /* display list of countries */ 
+                /* display list of countries */
+                $query = "SELECT * FROM countries";
+                $result = $conn->query($query);
+                while ($row = $result->fetch_assoc()){
+                    echo '<option value=' . $row['ISO'] . '>' . $row['CountryName'] . '</option>';
+                }
                 ?>
               </select>    
               <input type="text"  placeholder="Search title" class="form-control" name=title>
@@ -89,7 +102,112 @@
                 </div>
               </a>
             </li>        
-            */ 
+            */
+            if(isset($_GET['continent'])&&isset($_GET['country'])){
+                $continent = $_GET['continent'];
+                $country = $_GET['country'];
+                if($country=="0"){
+                    if($continent=="0"){
+                        findByNone($conn);
+                    }
+                    else{
+                        findByContinent($continent,$conn);
+                    }
+                }
+                else{
+                    if($continent=="0"){
+                        findByCountry($country,$conn);
+                    }
+                    else{
+                        findByBoth($continent,$country,$conn);
+                    }
+                }
+            }
+            else {
+                findByNone($conn);
+            }
+            function findByCountry($country,$conn){
+                $query = "SELECT * FROM imagedetails WHERE CountryCodeISO='$country'";
+                $result = $conn->query($query);
+                while ($row = $result->fetch_assoc()){
+                    $src = "images/square-medium/".$row['Path'];
+                    print <<<END
+                            <li>
+              <a href="detail.php?id=????" class="img-responsive">
+                <img src=$src alt="????">
+                <div class="caption">
+                  <div class="blur"></div>
+                  <div class="caption-text">
+                    <p>????</p>
+                  </div>
+                </div>
+              </a>
+            </li>        
+END;
+
+                }
+            }
+            function findByContinent($continent,$conn)
+            {
+                $query = "SELECT * FROM imagedetails WHERE ContinentCode='$continent'";
+                $result = $conn->query($query);
+                while ($row = $result->fetch_assoc()) {
+                    $src = "images/square-medium/" . $row['Path'];
+                    print <<<END
+                            <li>
+              <a href="detail.php?id=????" class="img-responsive">
+                <img src=$src alt="????">
+                <div class="caption">
+                  <div class="blur"></div>
+                  <div class="caption-text">
+                    <p>????</p>
+                  </div>
+                </div>
+              </a>
+            </li>        
+END;
+                }
+            }
+            function findByBoth($continent,$country,$conn){
+            $query = "SELECT * FROM imagedetails WHERE CountryCodeISO='$country' AND ContinentCode='$continent'";
+            $result = $conn->query($query);
+            while ($row = $result->fetch_assoc()){
+                $src = "images/square-medium/".$row['Path'];
+                print <<<END
+                            <li>
+              <a href="detail.php?id=????" class="img-responsive">
+                <img src=$src alt="????">
+                <div class="caption">
+                  <div class="blur"></div>
+                  <div class="caption-text">
+                    <p>????</p>
+                  </div>
+                </div>
+              </a>
+            </li>        
+END;
+            }
+            }
+            function findByNone($conn){
+                $query = "SELECT * FROM imagedetails";
+                $result = $conn->query($query);
+                while ($row = $result->fetch_assoc()){
+                    $src = "images/square-medium/".$row['Path'];
+                    print <<<END
+                            <li>
+              <a href="detail.php?id=????" class="img-responsive">
+                <img src=$src alt="????">
+                <div class="caption">
+                  <div class="blur"></div>
+                  <div class="caption-text">
+                    <p>????</p>
+                  </div>
+                </div>
+              </a>
+            </li>        
+END;
+                }
+            }
             ?>
        </ul>       
 
